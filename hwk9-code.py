@@ -1,7 +1,5 @@
 from random import randint
 
-boards = [1,2,0,4,0,6,0,8,0,10,0,12]
-
 ### Part 1: Lumber Mill
 def lumberSelection(prices:list, n:int) -> float:
     #This is a recurisve helper function to return the knapsack.
@@ -37,10 +35,12 @@ def lumberSelection(prices:list, n:int) -> float:
     # #This is the maximum value you can store in the knapsack.
     # print(cell[row_len-1][col_len-1])
     # #Let's check our answer.
-    # for i in range(len(cell)):
-    #     print(cell[i])
+    for i in range(len(cell)):
+        print(cell[i])
 
-    return cell[row_len-1][col_len-1]
+    # return cell[n][n]
+    return cell[row_len-1][col_len-2]
+
     # return knapsack(row_len-1, col_len-1)
 
 ### Part 2: Cash Register
@@ -51,7 +51,7 @@ def main():
     """ This function drives the program and will call each of your functions.
     """
     lumber_prices = [0.25, 1.45, 0, 3.58, 0, 4.4, 0, 5.18, 0, 6.58, 0, 8.28]
-    size = 3 #randint(1,len(lumber_prices))
+    size = 2 #randint(1,len(lumber_prices))
     print("The max value for " + str(size) + " feet is $" + str(lumberSelection(lumber_prices, size)))
     
     bills = [1, 2, 5, 10, 20, 50, 100]
