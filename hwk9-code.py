@@ -1,3 +1,7 @@
+# Names: Jessica Klurfeld and Michelle Lawson
+# Peers: N/A
+# References: algorithms adapted from Knapsack.py from in-class
+
 from random import randint
 
 ### Part 1: Lumber Mill
