@@ -29,10 +29,10 @@ def calculate_knapsack(items, values, weights, max_weight):
                 cell[i][w] = max(cell[i-1][w], cell[i - 1][w - weights[item_num]] + values[item_num])
     
     # #This is the maximum value you can store in the knapsack.
-    # print(cell[row_len-1][col_len-1])
+    print(cell[row_len-1][col_len-1])
     # #Let's check our answer.
-    # for i in range(len(cell)):
-    #     print(cell[i])
+    for i in range(len(cell)):
+        print(cell[i])
 
     return knapsack(row_len-1, col_len-1)
     
