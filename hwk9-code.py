@@ -28,12 +28,14 @@ def lumberSelection(prices:list, n:int) -> float:
     
     #Note: The zero row/column already has zeros in it.
     for i in range(1, row_len):
-        # item_num is the length?
         for w in range(1, col_len):
             if i > w:
                 cell[i][w] = cell[i-1][w]
+            # elif w-i >= i:
+            #     cell[i][w] = max(cell[i-1][w], cell[i - 1][w - i] + prices[i-1], cell[i][w-i] + prices[i-1])
             else:
-                cell[i][w] = max(cell[i-1][w], cell[i - 1][w - i] + prices[i-1])
+                cell[i][w] = max(cell[i-1][w], cell[i][w-i] + prices[i-1])
+                # cell[i][w] = max(cell[i-1][w], cell[i - 1][w - i] + prices[i-1], cell[i][w-i] + prices[i-1])
     
     # #This is the maximum value you can store in the knapsack.
     # print(cell[row_len-1][col_len-1])
@@ -54,12 +56,12 @@ def main():
     """ This function drives the program and will call each of your functions.
     """
     lumber_prices = [0.25, 1.45, 0, 3.58, 0, 4.4, 0, 5.18, 0, 6.58, 0, 8.28]
-    size =4 #randint(1,len(lumber_prices))
+    size = 12 #randint(1,len(lumber_prices))
     print("The max value for " + str(size) + " feet is $" + str(lumberSelection(lumber_prices, size)))
     
     bills = [1, 2, 5, 10, 20, 50, 100]
     change = randint(1, 100)
-    print("For $" + str(change) + " there are " + str(getNumberOfWays(6, bills)) + " combinations.")
+    print("For $" + str(change) + " there are " + str(getNumberOfWays(change, bills)) + " combinations.")
 
 if __name__ == '__main__': 
     main()
