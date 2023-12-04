@@ -44,18 +44,45 @@ def lumberSelection(prices:list, n:int) -> float:
 
 ### Part 2: Cash Register
 def getNumberOfWays(change_amount:int, bill_list:list) -> int:
-    return 0
+
+    row_len = len(bill_list) + 1
+    col_len = change_amount + 1
+    cell = []
+
+    for i in range(row_len):
+        row = [0] * col_len
+        cell.append(row)
+
+    for i in range(1, col_len):
+        cell[1][i] = 1
+
+    for bill_num in range(2, row_len):
+        for change in range(1, col_len):
+            bill = bill_list[bill_num-1]
+
+            # give the cell the value of the cell above it
+            cell[bill_num][change] = cell[bill_num -1][change]
+            if bill <= change:
+                cell[bill_num][change] += cell[bill_num][change-bill] 
+
+    #Let's check our answer.
+    for i in range(len(cell)):
+        print(cell[i])
+
+    # return cell[n][n]
+    return cell[row_len-1][col_len-1]
+
 
 def main():
     """ This function drives the program and will call each of your functions.
     """
     lumber_prices = [0.25, 1.45, 0, 3.58, 0, 4.4, 0, 5.18, 0, 6.58, 0, 8.28]
-    size =4 #randint(1,len(lumber_prices))
+    size =6 #randint(1,len(lumber_prices))
     print("The max value for " + str(size) + " feet is $" + str(lumberSelection(lumber_prices, size)))
     
     bills = [1, 2, 5, 10, 20, 50, 100]
-    change = randint(1, 100)
-    print("For $" + str(change) + " there are " + str(getNumberOfWays(6, bills)) + " combinations.")
+    change = 12
+    print("For $" + str(change) + " there are " + str(getNumberOfWays(change, bills)) + " combinations.")
 
 if __name__ == '__main__': 
     main()
