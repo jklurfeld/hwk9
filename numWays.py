@@ -51,18 +51,20 @@ def find_combinations(change_amount, bill_list):
 
 
 def main():
-    bill_list = [1, 2, 5, 10]
-    change_amount = 11
+    bill_list = [1, 2, 5, 10, 20]
+    change_amount = 9
     print(getNumberOfWays(change_amount, bill_list))
 
 
     # Change amount and bill list
-    change_amount = 8
-    bill_list = [1, 2, 5]
+    change_amount = 4
+    bill_list = [1, 2, 5, 10, 20]
 
     # Find all combinations
     combinations = find_combinations(change_amount, bill_list)
     combinations.sort()
     combinations
+
+    #print(combinations)
 
 main()

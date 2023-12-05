@@ -6,19 +6,7 @@ from random import randint
 
 ### Part 1: Lumber Mill
 def lumberSelection(prices:list, n:int) -> float:
-    #This is a recurisve helper function to return the knapsack.
-    # def knapsack(i: int, j: int):
-    #     if i == 0:
-    #         return {}
-    #     if cell[i][j] > cell[i-1][j]:
-    #         return {boards[i-1]}.union(knapsack(i-1,j-i-1))
-    #     else:
-    #         return knapsack(i-1,j) 
-        
-    # Start of calculate_knapsack code:    
-    # We are going to add a zero items (row) and zero weights (column)
-    #   because Python lists allow for negative indexing.
-    #   It also makes the problem slightly easier to solve.
+    #Initialize 2D array with 0s 
     row_len = n + 1
     col_len = n + 1
     cell = []
@@ -29,24 +17,16 @@ def lumberSelection(prices:list, n:int) -> float:
     #Note: The zero row/column already has zeros in it.
     for i in range(1, row_len):
         for w in range(1, col_len):
-            if i > w:
-                cell[i][w] = cell[i-1][w]
-            # elif w-i >= i:
-            #     cell[i][w] = max(cell[i-1][w], cell[i - 1][w - i] + prices[i-1], cell[i][w-i] + prices[i-1])
-            else:
-                cell[i][w] = max(cell[i-1][w], cell[i][w-i] + prices[i-1])
-                # cell[i][w] = max(cell[i-1][w], cell[i - 1][w - i] + prices[i-1], cell[i][w-i] + prices[i-1])
-    
-    # #This is the maximum value you can store in the knapsack.
-    # print(cell[row_len-1][col_len-1])
-    # #Let's check our answer.
-    for i in range(len(cell)):
-        print(cell[i])
 
-    # return cell[n][n]
+            if i > w: # if the length of the lumber is greater than the length of the board
+                # give the cell the value of the cell above it
+                cell[i][w] = cell[i-1][w]
+            else:
+                # give the cell the max value of the cell above it and the cell at the remaining length
+                cell[i][w] = max(cell[i-1][w], cell[i][w-i] + prices[i-1])
+
     return cell[row_len-1][col_len-1]
 
-    # return knapsack(row_len-1, col_len-1)
 
 ### Part 2: Cash Register
 def getNumberOfWays(change_amount:int, bill_list:list) -> int:
@@ -68,12 +48,16 @@ def getNumberOfWays(change_amount:int, bill_list:list) -> int:
 
             # give the cell the value of the cell above it
             cell[bill_num][change] = cell[bill_num -1][change]
-            if bill <= change:
-                cell[bill_num][change] += cell[bill_num][change-bill] 
 
-    #Let's check our answer.
-    for i in range(len(cell)):
-        print(cell[i])
+            if bill <= change: # if bill can fit into the change
+
+                # add 1 more combination if the change is equal to the bill
+                if change - bill == 0:
+                    cell[bill_num][change] += 1
+
+                # else add the remaining combinations not accounted for by the cell above it
+                else:
+                    cell[bill_num][change] += cell[bill_num][change-bill] 
 
     # return cell[n][n]
     return cell[row_len-1][col_len-1]
@@ -83,12 +67,12 @@ def main():
     """ This function drives the program and will call each of your functions.
     """
     lumber_prices = [0.25, 1.45, 0, 3.58, 0, 4.4, 0, 5.18, 0, 6.58, 0, 8.28]
-    size =4 #randint(1,len(lumber_prices))
+    size = randint(1,len(lumber_prices))
     print("The max value for " + str(size) + " feet is $" + str(lumberSelection(lumber_prices, size)))
     
     bills = [1, 2, 5, 10, 20, 50, 100]
     change = randint(1, 100)
-    print("For $" + str(change) + " there are " + str(getNumberOfWays(6, bills)) + " combinations.")
+    print("For $" + str(change) + " there are " + str(getNumberOfWays(change, bills)) + " combinations.")
 
 if __name__ == '__main__': 
     main()
